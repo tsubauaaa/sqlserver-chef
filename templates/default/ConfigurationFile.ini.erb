@@ -1,0 +1,247 @@
+;SQL Server 2014 Configuration File
+[OPTIONS]
+
+; INSTALL、UNINSTALL、UPGRADE などのセットアップ ワークフローを指定します。これは必須のパラメーターです。
+
+ACTION="Install"
+
+; ローカライズ版の Windows オペレーティング システムに英語版の SQL Server をインストールするには、/ENU パラメーターを使用します。
+
+ENU="False"
+
+; ユーザー インターフェイスの動作を制御するパラメーターです。有効な値は Normal (完全な UI の場合)、AutoAdvance (簡易 UI の場合)、および EnableUIOnServerCore (GUI ブロックをバイパスする Server Core セットアップの場合) です。
+
+;UIMODE="Normal"
+
+; ユーザー インターフェイスは表示されません。
+
+QUIET="False"
+
+; ユーザー操作はなく、進行状況だけが表示されます。
+
+QUIETSIMPLE="True"
+
+; SQL Server セットアップで更新プログラムを検出して含める必要があるかどうかを指定します。有効な値は、True と False または 1 と 0 です。既定では、SQL Server セットアップには、検出された更新プログラムが含まれます。
+
+UpdateEnabled="True"
+
+; 今後のリリースの SQL Server の改善のため、Microsoft にエラーを報告できるようにするかどうかを指定します。この機能を有効にするには 1 または True を指定し、無効にするには 0 または False を指定します。
+
+ERRORREPORTING="False"
+
+; このパラメーターが指定された場合、このコンピューターでは Microsoft Update を使用して更新プログラムが確認されます。
+
+USEMICROSOFTUPDATE="False"
+
+; インストール、アンインストール、またはアップグレードを行う機能を指定します。最上位の機能には、SQL、AS、RS、IS、MDS、ツールなどがあります。SQL 機能では、データベース エンジン、レプリケーション、フルテキスト、および Data Quality Services (DQS) サーバーがインストールされます。ツール機能では、管理ツール、オンライン ブック コンポーネント、SQL Server Data Tools、その他の共有コンポーネントがインストールされます。
+
+FEATURES=SQLENGINE,REPLICATION,FULLTEXT,DQ,AS,RS,RS_SHP,RS_SHPWFE,DQC,CONN,IS,BC,SDK,BOL,SSMS,ADV_SSMS,DREPLAY_CTLR,DREPLAY_CLT,SNAC_SDK,MDS
+
+; SQL Server セットアップが更新プログラムを取得する場所を指定します。有効な値は、"MU" (Microsoft Update を検索)、有効なフォルダー パス、.\MyUpdates のような相対パス、または UNC 共有です。既定では、SQL Server セットアップは Microsoft Update を検索するか、Window Server Update Services を通じて Windows Update サービスを検索します。
+
+UpdateSource="MU"
+
+; コマンド ライン パラメーターの使用方法を表示します
+
+HELP="False"
+
+; 詳細なセットアップ ログをコンソールにパイプすることを指定します。
+
+INDICATEPROGRESS="False"
+
+; セットアップで WOW64 にインストールするよう指定します。このコマンド ライン引数は、IA64 や 32 ビット システム上ではサポートされません。
+
+X86="False"
+
+; 共有コンポーネントのルート インストール ディレクトリを指定します。このディレクトリは、共有コンポーネントのインストール後は変更されません。
+
+INSTALLSHAREDDIR="<%= node['sqlserver']['install_directory'] %>"
+
+; WOW64 共有コンポーネントのルート インストール ディレクトリを指定します。このディレクトリは、WOW64 共有コンポーネントのインストール後は変更されません。
+
+INSTALLSHAREDWOWDIR="<%= node['sqlserver']['wow64_derectory'] %>"
+
+; 既定のインスタンスまたは名前付きインスタンスを指定します。既定のインスタンスは、Express 以外のエディションの場合は MSSQLSERVER、Express エディションの場合は SQLExpress です。SQL Server データベース エンジン (SQL)、Analysis Services (AS)、または Reporting Services (RS) のインストール時には、このパラメーターが必須です。
+
+INSTANCENAME="<%= node['sqlserver']['instance_name'] %>"
+
+; SQL Server 機能の使用状況データを収集して Microsoft へ送信できるようにするかどうかを指定します。この機能を有効にするには 1 または True を指定し、無効にするには 0 または False を指定します。
+
+SQMREPORTING="False"
+
+; 指定した SQL Server 機能のインスタンス ID を指定してください。SQL Server のディレクトリ構造、レジストリ構造、およびサービス名には、SQL Server インスタンスのインスタンス ID が組み込まれます。
+
+INSTANCEID="<%= node['sqlserver']['instance_name'] %>"
+
+; 分散再生コントローラー サービスが使用するアカウント。
+
+CTLRSVCACCOUNT="NT Service\SQL Server Distributed Replay Controller"
+
+; 分散再生コントローラー サービスのスタートアップの種類。
+
+CTLRSTARTUPTYPE="Manual"
+
+; 分散再生クライアント サービスが使用するアカウント。
+
+CLTSVCACCOUNT="NT Service\SQL Server Distributed Replay Client"
+
+; 分散再生クライアント サービスのスタートアップの種類。
+
+CLTSTARTUPTYPE="Manual"
+
+; 分散再生クライアント サービスの結果ディレクトリ。
+
+;CLTRESULTDIR="<%= node['sqlserver']['wow64_derectory'] + '\DReplayClient\ResultDir' %>"
+
+; 分散再生クライアント サービスの作業ディレクトリ。
+
+;CLTWORKINGDIR="<%= node['sqlserver']['wow64_derectory'] + '\DReplayClient\WorkingDir' %>"
+
+; RSInputSettings_RSInstallMode_Description
+
+RSINSTALLMODE="DefaultNativeMode"
+
+; RSInputSettings_RSInstallMode_Description
+
+RSSHPINSTALLMODE="SharePointFilesOnlyMode"
+
+; インストール ディレクトリを指定します。
+
+INSTANCEDIR="<%= node['sqlserver']['install_directory'] %>"
+
+; エージェント アカウント名
+
+AGTSVCACCOUNT="<%= node['sqlserver']['agent_account'] %>"
+
+; インストール後にサービスを自動的に開始します。
+
+AGTSVCSTARTUPTYPE="Manual"
+
+; Integration Services のスタートアップの種類。
+
+ISSVCSTARTUPTYPE="Automatic"
+
+; Integration Services のアカウント: ドメイン\ユーザーまたはシステム アカウント。
+
+ISSVCACCOUNT="NT Service\MsDtsServer120"
+
+; Analysis Services サービスが実行されるアカウントの名前。
+
+ASSVCACCOUNT="NT Service\MSSQLServerOLAPService"
+
+; サービスが作成された後に、サービスのスタートアップの種類に関する設定を制御します。
+
+ASSVCSTARTUPTYPE="Automatic"
+
+; Analysis Services で使用される照合順序。
+
+ASCOLLATION="Japanese_CI_AS"
+
+; Analysis Services のデータ ファイルの場所。
+
+ASDATADIR="<%= node['sqlserver']['install_directory'] + '\MSAS12.MSSQLSERVER\OLAP\Data' %>"
+
+; Analysis Services のログ ファイルの場所。
+
+ASLOGDIR="<%= node['sqlserver']['install_directory'] + '\MSAS12.MSSQLSERVER\OLAP\Log' %>"
+
+; Analysis Services のバックアップ ファイルの場所。
+
+ASBACKUPDIR="<%= node['sqlserver']['install_directory'] + '\MSAS12.MSSQLSERVER\OLAP\Backup' %>"
+
+; Analysis Services の一時ファイルの場所。
+
+ASTEMPDIR="<%= node['sqlserver']['install_directory'] + '\MSAS12.MSSQLSERVER\OLAP\Temp' %>"
+
+; Analysis Services の構成ファイルの場所。
+
+ASCONFIGDIR="<%= node['sqlserver']['install_directory'] + '\MSAS12.MSSQLSERVER\OLAP\Config' %>"
+
+; MSOLAP プロバイダーがプロセスで実行可能かどうかを指定します。
+
+ASPROVIDERMSOLAP="1"
+
+; 準備する必要のある管理者アカウントの一覧を指定します。
+
+ASSYSADMINACCOUNTS="<%= node['sqlserver']['system_admin'] %>"
+
+; Analysis Services インスタンスのサーバー モードを指定します。有効な値は MULTIDIMENSIONAL と TABULAR です。既定値は MULTIDIMENSIONAL です。
+
+ASSERVERMODE="MULTIDIMENSIONAL"
+
+; CM ブリックの TCP 通信ポート
+
+COMMFABRICPORT="0"
+
+; マトリックスでのプライベート ネットワークの使用方法
+
+COMMFABRICNETWORKLEVEL="0"
+
+; ブリック間の通信を保護する方法
+
+COMMFABRICENCRYPTION="0"
+
+; CM ブリックで使用される TCP ポート
+
+MATRIXCMBRICKCOMMPORT="0"
+
+; SQL Server サービスのスタートアップの種類。
+
+SQLSVCSTARTUPTYPE="Automatic"
+
+; FILESTREAM 機能を有効にするレベル (0、1、2、または 3)。
+
+FILESTREAMLEVEL="0"
+
+; SQL Server Express で RANU を有効にするには、"1" に設定します。
+
+ENABLERANU="False"
+
+; データベース エンジンに使用する Windows 照合順序または SQL 照合順序を指定します。
+
+SQLCOLLATION="Japanese_CI_AS"
+
+; SQL Server サービスのアカウント: ドメイン\ユーザーまたはシステム アカウント。
+
+SQLSVCACCOUNT="<%= node['sqlserver']['service_account'] %>"
+
+; SQL Server のシステム管理者として準備する Windows アカウント。
+
+SQLSYSADMINACCOUNTS="<%= node['sqlserver']['system_admin'] %>"
+
+; 既定値は Windows 認証です。混合モード認証の場合は "SQL" を使用してください。
+
+SECURITYMODE="SQL"
+
+; 現在のユーザーを %SQL_PRODUCT_SHORT_NAME% Express のデータベース エンジン システム管理者として準備します。
+
+ADDCURRENTUSERASSQLADMIN="False"
+
+; TCP/IP プロトコルを無効にするには 0 を、有効にするには 1 を指定します。
+
+TCPENABLED="1"
+
+; Named Pipes プロトコルを無効にするには 0 を、有効にするには 1 を指定します。
+
+NPENABLED="0"
+
+; Browser サービスのスタートアップの種類。
+
+BROWSERSVCSTARTUPTYPE="Disabled"
+
+; レポート サーバーの NT サービスが実行されるアカウントを指定します。省略した場合または値が空の文字列の場合は、現在のオペレーティング システムの既定のビルトイン アカウントです。
+; RSSVCACCOUNT のユーザー名部分は最大 20 文字です。
+; RSSVCACCOUNT のドメイン部分は最大 254 文字です。
+
+RSSVCACCOUNT="NT Service\ReportServer"
+
+; レポート サーバーの NT サービスのスタートアップ モードを指定します。
+; Manual - サービスのスタートアップは手動モードです (既定値)。
+; Automatic - サービスのスタートアップは自動モードです。
+; Disabled - サービスは無効です。
+
+RSSVCSTARTUPTYPE="Automatic"
+
+; 入力引数 FTSVCACCOUNT の説明を追加します
+
+FTSVCACCOUNT="NT Service\MSSQLFDLauncher"

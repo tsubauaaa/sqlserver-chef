@@ -1,0 +1,21 @@
+---
+driver:
+  name: vagrant
+  synced_folders:
+    - ["./", "/vagrant"]
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: win2012r2
+    driver_config:
+      communicator: winrm
+    transport:
+      name: winrm
+
+suites:
+  - name: default
+    run_list:
+      - recipe[sqlserver::default]
+    attributes:
