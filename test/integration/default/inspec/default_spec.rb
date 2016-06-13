@@ -18,6 +18,37 @@ control 'check-sql-server-installed' do
   end
 end
 
+control 'check-sql-server-olap-installed' do
+  impact 1.0
+  title 'check sql server olap installed'
+  desc 'Check sql server olap is installed'
+  describe service('MSSQLServerOLAPService') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+end
+
+control 'check-sql-browser-installed' do
+  impact 1.0
+  title 'check sql browser installed'
+  desc 'Check sql browser is installed'
+  describe service('SQLBrowser') do
+    it { should be_installed }
+  end
+end
+
+control 'check-report-server-installed' do
+  impact 1.0
+  title 'check report server installed'
+  desc 'Check report server is installed'
+  describe service('ReportServer') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
+end
+
 control 'check-sql-server-agent-installed' do
   impact 1.0
   title 'check sql server agent installed'
