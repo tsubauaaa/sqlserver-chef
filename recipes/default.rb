@@ -36,20 +36,12 @@ template 'C:/temp/ConfigurationFile.ini' do
   only_if { File.exist?('C:/temp') }
 end
 
-# powershell_script 'download-sqlserver-iso' do
-#   code <<-EOC
-#		$Client = New-Object System.Net.WebClient
-#		$Client.DownloadFile("#{node['sqlserver']['iso_url']}", "C:/temp/#{node['sqlserver']['iso_file']}")
-#		EOC
-#   guard_interpreter :powershell_script
-#   not_if { File.exists?("C:/temp/#{node['sqlserver']['iso_file']}")}
-# end
-
-cookbook_file "C:/temp/#{node['sqlserver']['iso_file']}" do
-  source node['sqlserver']['iso_file']
-  owner 'Administrator'
-  group 'Administrator'
-  mode '0755'
+powershell_script 'download-sqlserver-iso' do
+  code <<-EOC
+		$Client = New-Object System.Net.WebClient
+		$Client.DownloadFile("#{node['sqlserver']['iso_url']}", "C:/temp/#{node['sqlserver']['iso_file']}")
+		EOC
+  guard_interpreter :powershell_script
   not_if { File.exist?("C:/temp/#{node['sqlserver']['iso_file']}") }
 end
 

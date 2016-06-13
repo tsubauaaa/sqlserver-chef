@@ -26,8 +26,8 @@ describe 'sqlserver::default' do
       mode: '0644'
     )
   end
-  it 'creates a cookbook_file with iso file' do
-    expect(chef_run).to create_cookbook_file('C:/temp/SQLServer2014SP1-FullSlipstream-x64-JPN.iso')
+  it 'runs a powershell_script with download iso file' do
+    expect(chef_run).to run_powershell_script('download-sqlserver-iso')
   end
   it 'runs a powershell_script with mount iso file' do
     expect(chef_run).to run_powershell_script('mount-iso-file')
