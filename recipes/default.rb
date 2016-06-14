@@ -79,10 +79,10 @@ powershell_script 'dismount-iso-file' do
   only_if "((gwmi -class win32_LogicalDisk | Where-Object {$_.VolumeName -eq \"#{node['sqlserver']['volume_name']}\"}).VolumeName -eq \"#{node['sqlserver']['volume_name']}\")"
 end
 
-# powershell_script 'delete-iso-file' do
-#   code <<-EOC
-#		[System.IO.File]::Delete("C:/temp/#{node['sqlserver']['iso_file']}")
-#	  EOC
-#  guard_interpreter :powershell_script
-#  only_if { File.exist?("C:/temp/#{node['sqlserver']['iso_file']}") }
-# end
+powershell_script 'delete-iso-file' do
+  code <<-EOC
+		[System.IO.File]::Delete("C:/temp/#{node['sqlserver']['iso_file']}")
+	  EOC
+  guard_interpreter :powershell_script
+  only_if { File.exist?("C:/temp/#{node['sqlserver']['iso_file']}") }
+end
